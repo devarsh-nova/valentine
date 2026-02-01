@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Valentine 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff4d6d,#845ec2);
+  font-family:Arial;
+  overflow:hidden;
+  color:white;
+}
+
+.card{
+  background:rgba(255,255,255,0.2);
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+}
+
+button{
+  padding:12px 25px;
+  font-size:18px;
+  border-radius:30px;
+  border:none;
+  margin:10px;
+  cursor:pointer;
+}
+
+#yes{background:#ffccd5;}
+#no{
+  background:#6c757d;
+  color:white;
+  position:absolute;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h1>Will you be my Valentine? 💘</h1>
+<button id="yes">YES 😍</button>
+<button id="no">NO 😒</button>
+<p id="msg"></p>
+</div>
+
+<audio id="yesSong" src="yes.mp3"></audio>
+<audio id="noSong" src="no.mp3"></audio>
+
+<script>
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const msg = document.getElementById("msg");
+
+const yesSong = document.getElementById("yesSong");
+const noSong = document.getElementById("noSong");
+
+let noAttempts = 0;
+const maxAttempts = 5;
+
+// YES button
+yesBtn.onclick = () => {
+  yesSong.play();
+  document.body.innerHTML = "<h1 style='color:white;'>YAYYY 😍💖<br>You chose YES!</h1>";
+};
+
+// NO button (hard mode)
+function moveNo(){
+  noAttempts++;
+
+  if(navigator.vibrate) navigator.vibrate(150);
+
+  if(noAttempts < maxAttempts){
+    msg.innerText = "Try harder 😏 (" + noAttempts + "/5)";
+    noBtn.style.left = Math.random()*(window.innerWidth-120)+"px";
+    noBtn.style.top = Math.random()*(window.innerHeight-60)+"px";
+  }
+  else{
+    noSong.play();
+    document.body.innerHTML = "<h1 style='color:white;'>💔 You finally chose NO</h1>";
+  }
+}
+
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+noBtn.addEventListener("click", moveNo);
+</script>
+
+</body>
+</html>
