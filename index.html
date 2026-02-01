@@ -15,14 +15,12 @@ body{
   overflow:hidden;
   color:white;
 }
-
 .card{
   background:rgba(255,255,255,0.2);
   padding:30px;
   border-radius:20px;
   text-align:center;
 }
-
 button{
   padding:12px 25px;
   font-size:18px;
@@ -31,13 +29,12 @@ button{
   margin:10px;
   cursor:pointer;
 }
-
-#yes{background:#ffccd5;}
 #no{
+  position:absolute;
   background:#6c757d;
   color:white;
-  position:absolute;
 }
+#yes{background:#ffccd5;}
 </style>
 </head>
 
@@ -61,29 +58,24 @@ const msg = document.getElementById("msg");
 const yesSong = document.getElementById("yesSong");
 const noSong = document.getElementById("noSong");
 
-let noAttempts = 0;
-const maxAttempts = 5;
+let noCount = 0;
 
-// YES button
-yesBtn.onclick = () => {
+yesBtn.addEventListener("click", ()=>{
   yesSong.play();
-  document.body.innerHTML = "<h1 style='color:white;'>YAYYY 😍💖<br>You chose YES!</h1>";
-};
+  document.body.innerHTML="<h1 style='color:white;'>😍 You chose YES!</h1>";
+});
 
-// NO button (hard mode)
 function moveNo(){
-  noAttempts++;
+  noCount++;
+  if(navigator.vibrate) navigator.vibrate(100);
 
-  if(navigator.vibrate) navigator.vibrate(150);
-
-  if(noAttempts < maxAttempts){
-    msg.innerText = "Try harder 😏 (" + noAttempts + "/5)";
+  if(noCount < 5){
+    msg.innerText = "Try harder 😏 ("+noCount+"/5)";
     noBtn.style.left = Math.random()*(window.innerWidth-120)+"px";
     noBtn.style.top = Math.random()*(window.innerHeight-60)+"px";
-  }
-  else{
+  } else {
     noSong.play();
-    document.body.innerHTML = "<h1 style='color:white;'>💔 You finally chose NO</h1>";
+    document.body.innerHTML="<h1 style='color:white;'>💔 You chose NO</h1>";
   }
 }
 
